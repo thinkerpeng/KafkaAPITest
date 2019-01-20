@@ -57,7 +57,7 @@ iptables -F
 bash bin/kafka-server-start.sh config/server.properties  
 
 ##########################################################################################  
-#create topic:
+#create topic:  
 bash bin/kafka-topics.sh --create -zookeeper 192.168.31.201:2181 --replication-factor 1 --partitions 1 --topic test  
 
 #list topic:  
