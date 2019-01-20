@@ -11,7 +11,7 @@ dataDir=/tmp/zookeeper
 clientPort=2181  
 server.0=192.168.31.201:2888:3888   
 
-#before start zookeeper, ensure close firewall and iptables
+#before start zookeeper, ensure close firewall and iptables  
 systemctl status firewalld  
 systemctl stop firewalld  
 systemctl disable firewalld  
