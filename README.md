@@ -58,16 +58,20 @@ bash bin/kafka-server-start.sh config/server.properties
 
 ##########################################################################################  
 #create topic:  
-bash bin/kafka-topics.sh --create -zookeeper 192.168.31.201:2181 --replication-factor 1 --partitions 1 --topic test  
+bash bin/kafka-topics.sh --create --zookeeper 192.168.31.229:2181,192.168.31.82:2181,192.168.31.121:2181 \
+ --replication-factor 3 --partitions 3 --topic test
 
 #list topic:  
-bash bin/kafka-topics.sh --zookeeper 192.168.31.201:2181 --describe --topic test  
+bash bin/kafka-topics.sh --zookeeper 192.168.31.229:2181,192.168.31.82:2181,192.168.31.121:2181 \
+ --describe --topic test
+bash bin/kafka-topics.sh --list --zookeeper 192.168.31.229:2181,192.168.31.82:2181,192.168.31.121:2181
 
 #produce message:  
-bash bin/kafka-console-producer.sh --broker-list 192.168.31.229:9092 --topic test  
+bash bin/kafka-console-producer.sh --broker-list 192.168.31.229:9092,192.168.31.82:9092,192.168.31.121:9092 --topic test
 
 #consume message:  
-bash bin/kafka-console-consumer.sh --bootstrap-server 192.168.31.229:9092 --topic topic_create --from-beginning  
+bash bin/kafka-console-consumer.sh --bootstrap-server 192.168.31.229:9092,192.168.31.82:9092,192.168.31.121:9092 \
+ --topic test --from-beginning
 
 bash bin/kafka-console-consumer.sh --bootstrap-server 192.168.31.229:9092 --topic topic_create  
 

@@ -23,13 +23,15 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class KafkaApi
 {
-	private static final String ZK_CONNECTOR = "192.168.31.201:2181";
+	private static final String ZK_CONNECTOR = "192.168.31.229:2181,192.168.31.82:2181,192.168.31.121:2181";
 
-	private static final String TOPIC_NAME_CREATE = "topic_create";
+	private static final String KAFKA_BROKERS = "192.168.31.229:9092,192.168.31.82:9092,192.168.31.121:9092";
 
-	private static final int PRODUCE_PERIOD = 50;
+	private static final String TOPIC_NAME_CREATE = "test";
 
-	private static final int CONSUME_PERIOD = 100;
+	private static final int PRODUCE_PERIOD = 500;
+
+	private static final int CONSUME_PERIOD = 1000;
 
 	private static AtomicInteger count = new AtomicInteger(0);
 
@@ -44,7 +46,7 @@ public class KafkaApi
 	private void produceMessage()
 	{
 		Properties props = new Properties();
-		props.put("bootstrap.servers", "192.168.31.229:9092");
+		props.put("bootstrap.servers", KAFKA_BROKERS);
 		props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
 		props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
 
@@ -64,6 +66,7 @@ public class KafkaApi
 				else
 				{
 					System.out.println("send message success. " + count.incrementAndGet());
+					//count.incrementAndGet();
 				}
 			});
 		};
