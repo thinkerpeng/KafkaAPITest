@@ -1,0 +1,11 @@
+##### 客户端登录zk
+bash bin/zkCli.sh -server 192.168.31.162:2181
+
+##### 执行 help 查看帮助说明
+create /rest hello  >>> 创建/rest节点，并设置hello数据信息
+create /test null   >>> 创建/test节点，并设置为空
+create /test/child null    >>> 创建/test/child子节点
+set /rest abc123    >>> 给/rest节点设置数据信息
+delete /rest  >>> 删除/rest节点，被删除的节点必须是空节点，不能有子节点，可以有数据
+rmr /rest     >>> 删除/rest节点
+quit          >>> 退出客户端
