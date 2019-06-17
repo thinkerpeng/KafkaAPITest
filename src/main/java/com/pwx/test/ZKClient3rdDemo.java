@@ -3,12 +3,14 @@ package com.pwx.test;
 import org.I0Itec.zkclient.IZkChildListener;
 import org.I0Itec.zkclient.IZkDataListener;
 import org.I0Itec.zkclient.ZkClient;
+import org.I0Itec.zkclient.serialize.BytesPushThroughSerializer;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -22,6 +24,7 @@ public class ZKClient3rdDemo
     private static final Logger LOGGER = LoggerFactory.getLogger(ZKClient3rdDemo.class);
 
     private static final int SESSION_TIME_OUT = 6000;
+    private static final int CONNECT_TIME_OUT = 6000;
     private static final String CONNECT_STRING = "192.168.31.162:2181";
     private static final String WATCH_PATH = "/rest";
     private static final String WATCH_PATH_DIR1 = "/rest/dir1";
@@ -32,7 +35,8 @@ public class ZKClient3rdDemo
     @Before
     public void init()
     {
-        zkClient = new ZkClient(CONNECT_STRING, SESSION_TIME_OUT);
+        //注意Kafka中使用的是BytesPushThroughSerializer序列化，读取写入时byte数组
+        zkClient = new ZkClient(CONNECT_STRING, SESSION_TIME_OUT, CONNECT_TIME_OUT, new BytesPushThroughSerializer());
     }
 
     @Test
@@ -59,14 +63,29 @@ public class ZKClient3rdDemo
     @Test
     public void readZnode()
     {
-        String value = zkClient.readData(WATCH_PATH_DIR1);
-        LOGGER.info("Read znode value: {}", value);
+        byte[] data = zkClient.readData(WATCH_PATH_DIR1);
+        try
+        {
+            LOGGER.info("Read znode value: {}", new String(data, "UTF-8"));
+        }
+        catch (UnsupportedEncodingException e)
+        {
+            e.printStackTrace();
+        }
     }
 
     @Test
     public void writeZnode()
     {
-        zkClient.writeData(WATCH_PATH_DIR1, "hello world!");
+        try
+        {
+            //可将JavaBean序列化成json字符串写入
+            zkClient.writeData(WATCH_PATH_DIR1, String.valueOf("hello world!").getBytes("UTF-8"));
+        }
+        catch (UnsupportedEncodingException e)
+        {
+            e.printStackTrace();
+        }
     }
 
     @Test
