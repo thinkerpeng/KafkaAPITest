@@ -1,6 +1,6 @@
 ##########################################################################################
 #zookeeper download:
-wget https://archive.apache.org/dist/zookeeper/zookeeper-3.4.12/zookeeper-3.4.12.tar.gz
+wget http://mirror.bit.edu.cn/apache/zookeeper/zookeeper-3.4.14/zookeeper-3.4.14.tar.gz
 
 #setting conf/zoo.cfg
 tickTime=2000
@@ -24,7 +24,7 @@ bash bin/zkServer.sh start
 
 ##########################################################################################
 #kafka download:
-wget https://archive.apache.org/dist/kafka/0.10.2.1/kafka_2.10-0.10.2.1.tgz
+wget http://mirror.bit.edu.cn/apache/kafka/2.2.1/kafka_2.12-2.2.1.tgz
 
 #setting config/server.properties. use shell command: grep -Ev "^$|^[#;]" config/server.properties
 broker.id=0
